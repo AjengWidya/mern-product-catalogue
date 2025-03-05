@@ -7,6 +7,8 @@ import productRoutes from "./routes/product.route.js";
 dotenv.config();
 
 const app = express();
+
+// Use value from the env, otherwise 5000
 const PORT = process.env.PORT || 5000;
 
 /**
