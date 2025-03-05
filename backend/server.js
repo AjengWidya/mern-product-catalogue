@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import Product from "./models/product.model.js";
+import mongoose from "mongoose";
 
 dotenv.config();
 
@@ -29,10 +30,7 @@ app.post("/api/products", async (request, response) => {
   const product = request.body; // user will send this data
 
   if (!product.name || !product.price || !product.image) {
-    return response.status(400).json({
-      success: false,
-      message: "Please provide all fields"
-    });
+    return response.status(400).json({ success: false, message: "Please provide all fields" });
   }
 
   const newProduct = new Product(product);
@@ -42,6 +40,23 @@ app.post("/api/products", async (request, response) => {
     response.status(201).json({ success: true, data: newProduct });
   } catch (error) {
     console.error("Error in creating product:", error.message);
+    response.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
+app.put("/api/products/:id", async (request, response) => {
+  const { id } = request.params;
+  
+  const product = request.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return response.status(404).json({ success: false, message: "Invalid product ID" });
+  }
+
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, {new: true});
+    response.status(200).json({ success: true, data: updatedProduct });
+  } catch (error) {
     response.status(500).json({ success: false, message: "Server Error" });
   }
 });
