@@ -15,6 +15,16 @@ const app = express();
  */
 app.use(express.json());
 
+app.get("/api/products", async (request, response) => {
+  try {
+    const products = await Product.find({});
+    response.status(200).json({ success: true, data: products });
+  } catch (error) {
+    console.log("Error in fetching products:", error.message);
+    response.status(500).json({ success: false, message: "Server Error" });
+  }
+});
+
 app.post("/api/products", async (request, response) => {
   const product = request.body; // user will send this data
 
@@ -31,7 +41,7 @@ app.post("/api/products", async (request, response) => {
     await newProduct.save();
     response.status(201).json({ success: true, data: newProduct });
   } catch (error) {
-    console.error("Error when creating product: ", error.message);
+    console.error("Error in creating product:", error.message);
     response.status(500).json({ success: false, message: "Server Error" });
   }
 });
@@ -43,6 +53,7 @@ app.delete("/api/products/:id", async (request, response) => {
     await Product.findByIdAndDelete(id);
     response.status(200).json({ success: true, message: "Product deleted" });
   } catch (error) {
+    console.log("Error in deleting product:", error.message);
     response.status(404).json({ success: false, message: "Product not found" });
   }
 });
