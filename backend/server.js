@@ -36,6 +36,17 @@ app.post("/api/products", async (request, response) => {
   }
 });
 
+app.delete("/api/products/:id", async (request, response) => {
+  const { id } = request.params;
+  
+  try {
+    await Product.findByIdAndDelete(id);
+    response.status(200).json({ success: true, message: "Product deleted" });
+  } catch (error) {
+    response.status(404).json({ success: false, message: "Product not found" });
+  }
+});
+
 /**
  * The first param is the port
  * The second param is the callback function
