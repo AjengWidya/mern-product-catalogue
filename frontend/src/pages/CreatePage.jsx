@@ -1,6 +1,14 @@
 import { useProductStore } from "../store/product.js";
-import { useColorModeValue } from "../components/ui/color-mode";
-import { Box, Button, Container, Heading, Input, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Input,
+  useColorModeValue,
+  useToast,
+  VStack
+} from "@chakra-ui/react";
 import { useState } from "react"
 
 const CreatePage = () => {
@@ -10,6 +18,9 @@ const CreatePage = () => {
     image: "",
   });
 
+  // For alert
+  const toast = useToast();
+
   // Extract the function made from the global store
   const { createProduct } = useProductStore();
 
@@ -17,8 +28,24 @@ const CreatePage = () => {
     // Extract what the function is returning
     const { success, message } = await createProduct(newProduct);
     
-    console.log("Success:", success);
-    console.log("Message:", message);
+    if (!success) {
+      toast({
+        title: "Error",
+        description: message,
+        status: "error",
+        isClosable: true
+      });
+    } else {
+      toast({
+        title: "Success",
+        description: message,
+        status: "success",
+        isClosable: true
+      });
+    }
+
+    // Reset the state after saving process
+    setNewProduct({ name: "", price: "", image: "" });
   }
 
   return (
