@@ -17,7 +17,7 @@ app.use(async (request, response, next) => {
     await connectDB();
 
     // Continue to the next middleware or route handler
-    next;
+    next();
   } catch (error) {
     console.error("Error connecting to the database:", error);
     response.status(500).json({ message: "Database connection failed" });
