@@ -6,11 +6,23 @@ import cors from "cors";
 
 import productRoutes from "./routes/product.route.js";
 
-console.log("on server.js");
-
 dotenv.config();
 
 const app = express();
+
+// Middleware to connect to the database before handling requests (for Vercel)
+app.use(async (request, response, next) => {
+  try {
+    // Ensure the DB is connected
+    await connectDB();
+
+    // Continue to the next middleware or route handler
+    next();
+  } catch (error) {
+    console.error("Error connecting to the database:", error);
+    response.status(500).json({ message: "Database connection failed" });
+  }
+});
 
 // Use value from the env, otherwise 5000
 // Uncomment for localhost
@@ -39,6 +51,9 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
+// Export the app for Vercel
+export default app;
+
 /**
  * The first param is the port
  * The second param is the callback function
@@ -48,11 +63,3 @@ if (process.env.NODE_ENV === "production") {
 //   connectDB();
 //   console.log(`Server started at http://localhost:${PORT}`);
 // });
-
-console.log("export default");
-
-// For Vercel (serverless environment)
-export default async (req, res) => {
-  await connectDB();  // Ensure DB connection for each request
-  return app(req, res);  // Call express app as a request handler
-};
