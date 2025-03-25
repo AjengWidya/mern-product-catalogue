@@ -11,7 +11,7 @@ export default defineConfig({
          * This will be the prefix for /api
          * For example: /api/products will be http://localhost:5000/api/products
          */
-        target: "http://localhost:5000"
+        target: process.env.VITE_API_URL
       }
     }
   }
