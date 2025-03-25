@@ -6,6 +6,8 @@ import cors from "cors";
 
 import productRoutes from "./routes/product.route.js";
 
+console.log("on server.js");
+
 dotenv.config();
 
 const app = express();
@@ -46,6 +48,8 @@ if (process.env.NODE_ENV === "production") {
 //   connectDB();
 //   console.log(`Server started at http://localhost:${PORT}`);
 // });
+
+console.log("export default");
 
 // For Vercel (serverless environment)
 export default async (req, res) => {
