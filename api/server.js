@@ -11,22 +11,22 @@ dotenv.config({ path: '../.env' });
 const app = express();
 
 // Middleware to connect to the database before handling requests (for Vercel)
-// app.use(async (request, response, next) => {
-//   try {
-//     // Ensure the DB is connected
-//     await connectDB();
+app.use(async (request, response, next) => {
+  try {
+    // Ensure the DB is connected
+    await connectDB();
 
-//     // Continue to the next middleware or route handler
-//     next();
-//   } catch (error) {
-//     console.error("Error connecting to the database:", error);
-//     response.status(500).json({ message: "Database connection failed" });
-//   }
-// });
+    // Continue to the next middleware or route handler
+    next();
+  } catch (error) {
+    console.error("Error connecting to the database:", error);
+    response.status(500).json({ message: "Database connection failed" });
+  }
+});
 
 // Use value from the env, otherwise 5000
 // Uncomment for localhost
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
 
 const __dirname = path.resolve();
 
@@ -57,14 +57,14 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // Export the app for Vercel
-// export default app;
+export default app;
 
 /**
  * The first param is the port
  * The second param is the callback function
  * Commented out for deploying to Vercel, uncomment for localhost
  */
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server started at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   connectDB();
+//   console.log(`Server started at http://localhost:${PORT}`);
+// });
