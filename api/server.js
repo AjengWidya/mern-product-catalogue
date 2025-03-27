@@ -49,8 +49,10 @@ app.use("/api/products", productRoutes);
  * so both folders are accessible in port 5000
  */
 if (process.env.NODE_ENV === "production") {
+  // Serve the static files from the React app
   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
+  // Handle requests by serving index.html for all routes
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
   });
