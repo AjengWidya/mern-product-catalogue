@@ -7,6 +7,9 @@ dotenv.config({ path: '../.env' });
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  build: {
+    outDir: "dist"
+  },
   server: {
     proxy: {
       "/api": {
