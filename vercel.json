@@ -9,11 +9,11 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "frontend/dist/$1"
+      "dest": "frontend/dist/index.html"
     },
     {
       "src": "/api/(.*)",
-      "dest": "api/$1"
+      "dest": "api/server.js"
     }
   ],
   "buildCommand": "npm install --prefix api && npm install --prefix frontend && npm run build --prefix frontend"
