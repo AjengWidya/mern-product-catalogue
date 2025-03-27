@@ -23,5 +23,5 @@
       "dest": "api/$1"
     }
   ],
-  "buildCommand": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend"
+  "buildCommand": "npm install --prefix api && npm install --prefix frontend && npm run build --prefix frontend"
 }
