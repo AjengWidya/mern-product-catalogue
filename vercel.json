@@ -15,8 +15,13 @@
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/api/(.*)",
       "dest": "api/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "frontend/dist/index.html"
     }
-  ]
+  ],
+  "buildCommand": "npm install && npm run build"
 }
