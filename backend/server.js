@@ -28,7 +28,7 @@ app.use(async (request, response, next) => {
 // Uncomment for localhost
 // const PORT = process.env.PORT || 5000;
 
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 app.use(cors());
 
@@ -41,7 +41,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.status(200).send("Hello World");
 });
 
 app.use("/api/products", productRoutes);
