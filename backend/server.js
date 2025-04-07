@@ -41,7 +41,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.status(200).send("Hello World");
+  res.status(200).json({message: "Hello World"});
 });
 
 app.use("/api/products", productRoutes);
