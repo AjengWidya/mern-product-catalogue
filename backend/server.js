@@ -40,6 +40,10 @@ app.use(cors());
  */
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
+
 app.use("/api/products", productRoutes);
 
 /** 
@@ -48,15 +52,15 @@ app.use("/api/products", productRoutes);
  * from frontend folder as well
  * so both folders are accessible in port 5000
  */
-if (process.env.NODE_ENV === "production") {
-  // Serve the static files from the React app
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+// if (process.env.NODE_ENV === "production") {
+//   // Serve the static files from the React app
+//   app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
-  // Handle requests by serving index.html for all routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
-  });
-}
+//   // Handle requests by serving index.html for all routes
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
+//   });
+// }
 
 // Export the app for Vercel
 export default app;
